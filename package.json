@@ -23,5 +23,10 @@
   "peerDependencies": {
     "dustjs-linkedin": "^2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "moment": "^2.19.1"
+  },
+  "devDependencies": {
+    "dustjs-linkedin": "^2.7.5"
+  }
 }
