@@ -1,6 +1,6 @@
 {
   "name": "@myhr/dust-moment",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Dust helpers using moment to format dates",
   "main": "dust-moment.js",
   "scripts": {
