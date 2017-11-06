@@ -4,7 +4,8 @@ var formats = [
   moment.ISO_8601, 
   'YYYY-MM-DD HH:mm:ss',
   'YYYY-MM-DD', 
-  'DD-MMM-YYYY'
+  'DD-MMM-YYYY',
+  'ddd MMM DD YYYY HH:mm:ss Z'
 ];
 
 module.exports = function( dust ) {
@@ -27,11 +28,14 @@ module.exports = function( dust ) {
 
     moment.locale(lan);
 
-    if (!date) {
-      return chunk.write('');
-    }
     var m = moment(date, formats);
     if (!m.isValid()) {
+      if (typeof Rollbar === 'object' && typeof Rollbar.warning === 'function') {
+        Rollbar.warning("dust-moment.formatDate: !m.isValid(): date, accepted formats: ", date, formats);
+      }
+      else if (typeof console === 'object' && typeof console.log) {
+        console.log("dust-moment.formatDate: !m.isValid(): date, accepted formats: ", date, formats);
+      }
       return chunk.write('');
     }
 
@@ -52,6 +56,10 @@ module.exports = function( dust ) {
 
     moment.locale(lan);
 
+    if (isString(date)) {		
+      date = new Date(date);		
+    }
+    
     var m = moment(date, formats);
     if (!m.isValid()) {
       return chunk.write('');
