@@ -56,10 +56,6 @@ module.exports = function( dust ) {
 
     moment.locale(lan);
 
-    if (isString(date)) {		
-      date = new Date(date);		
-    }
-    
     var m = moment(date, formats);
     if (!m.isValid()) {
       return chunk.write('');
