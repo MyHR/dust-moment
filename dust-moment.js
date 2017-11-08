@@ -18,9 +18,9 @@ module.exports = function( dust ) {
 
   dust.helpers.formatDate = function(chunk, context, bodies, params) {
     var date = dust.helpers.tap(params.date, chunk, context);
-    // Do not pass false to moment constructor to avoid deprecation warning
+    var defaultValue = '';
     if (!date) {
-      date = null;
+      return chunk.write(defaultValue);
     }
     var format = dust.helpers.tap(params.format || "MMM Do YYYY", chunk, context);
     var noTimeWrapper = dust.helpers.tap(params.noTimeWrapper || false, chunk, context);
@@ -30,13 +30,13 @@ module.exports = function( dust ) {
 
     var m = moment(date, formats);
     if (!m.isValid()) {
-      if (typeof Rollbar === 'object' && typeof Rollbar.warning === 'function') {
-        Rollbar.warning("dust-moment.formatDate: !m.isValid(): date, accepted formats: ", date, formats);
-      }
-      else if (typeof console === 'object' && typeof console.log) {
+      if (typeof console === 'object' && typeof console.log) {
         console.log("dust-moment.formatDate: !m.isValid(): date, accepted formats: ", date, formats);
       }
-      return chunk.write('');
+      if (typeof Rollbar === 'object' && typeof Rollbar.warning === 'function') {
+        Rollbar.warning("dust-moment.formatDate: !m.isValid()");
+      }
+      return chunk.write(defaultValue);
     }
 
     var output = m.format(format);
@@ -49,6 +49,10 @@ module.exports = function( dust ) {
 
   dust.helpers.fromNow = function(chunk, context, bodies, params) {
     var date = dust.helpers.tap(params.from || params.date || new Date(), chunk, context);
+    var defaultValue = '';
+    if (!date) {
+      return chunk.write(defaultValue);
+    }
     var removeSuffix = dust.helpers.tap(params.removeSuffix === 'true', chunk, context);
     var futurePrefix = dust.helpers.tap(params.futurePrefix || "", chunk, context);
 
@@ -58,7 +62,13 @@ module.exports = function( dust ) {
 
     var m = moment(date, formats);
     if (!m.isValid()) {
-      return chunk.write('');
+      if (typeof console === 'object' && typeof console.log) {
+        console.log("dust-moment.fromNow: !m.isValid(): date, accepted formats: ", date, formats);
+      }
+      if (typeof Rollbar === 'object' && typeof Rollbar.warning === 'function') {
+        Rollbar.warning("dust-moment.fromNow: !m.isValid()");
+      }
+      return chunk.write(defaultValue);
     }
 
     if (m.isAfter(moment())) {
