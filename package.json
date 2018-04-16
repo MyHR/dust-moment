@@ -27,6 +27,6 @@
     "moment": "^2.22.1"
   },
   "devDependencies": {
-    "dustjs-linkedin": "^2.7.5"
+    "dustjs-linkedin": "2.7.5"
   }
 }
