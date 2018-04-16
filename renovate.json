@@ -3,5 +3,6 @@
     "config:base"
   ],
   "npmToken": "880d567d-023c-428a-b8cf-5150f0c188d4",
-  "assignees": ["cabbiepete", "aprilnixon"]
+  "assignees": ["cabbiepete", "aprilnixon"],
+  "schedule": ["after 10pm and before 5am on every weekday", "every weekend"]
 }
