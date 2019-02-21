@@ -33,9 +33,6 @@ module.exports = function( dust ) {
       if (typeof console === 'object' && typeof console.log) {
         console.log("dust-moment.formatDate: !m.isValid(): date, accepted formats: ", date, formats);
       }
-      if (typeof Rollbar === 'object' && typeof Rollbar.warning === 'function') {
-        Rollbar.warning("dust-moment.formatDate: !m.isValid()");
-      }
       return chunk.write(defaultValue);
     }
 
